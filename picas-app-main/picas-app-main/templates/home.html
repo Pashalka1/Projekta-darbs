@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+    <div>
+    {% for pizza in pizzas %}
+    <article class="media content-section">
+        <div class="media-body">
+            <h2><a class="article-title" href="{{ url_for('get_pizza', id=pizza.id) }}">{{ pizza.name }}</a></h2>
+            <p class="article-content">Cena: {{ pizza.price }} EUR</p>
+            {% if pizza.picture %}
+            <br>
+            <div><img src="{{ url_for('static', filename=pizza.picture) }}" alt=""></div>
+            {% endif %}
+        </div>
+    </article>
+    {% endfor %}
+    </div>
+{% endblock %}
