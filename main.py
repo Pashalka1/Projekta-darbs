@@ -13,7 +13,7 @@ from wtforms.validators import DataRequired, Length, EqualTo
 import os
 
 DATABASE = {
-    'name': 'pizza.db',
+    'name': 'team.db',
     'engine': 'peewee.SqliteDatabase'
 }
 SECRET_KEY = 'afagfasgasgagfagsa'
@@ -26,19 +26,20 @@ auth = Auth(app, db)
 admin = Admin(app, auth)
 
 
-class Pizzas(db.Model):
+class Team(db.Model):
     name = TextField()
-    ingredients = TextField()
-    size = IntegerField()
-    price = FloatField()
+    members = TextField()
+    lenght = IntegerField()
+    height = IntegerField()
+    width = IntegerField()
     picture = TextField(null=True)
 
 
-class PizzaAdmin(ModelAdmin):
+class TeamAdmin(ModelAdmin):
     columns: ('name')
 
 
-admin.register(Pizzas, PizzaAdmin)
+admin.register(Team, TeamAdmin)
 admin.setup()
 
 
@@ -53,43 +54,38 @@ class UserRegistrationForm(FlaskForm):
                                      validators=[DataRequired(), EqualTo('password')])
 
 
-class CreatePizzaForm(FlaskForm):
-    name = StringField('Name', validators=[DataRequired()])
-    ingredients = StringField('Ingredients', validators=[DataRequired()])
-    size = FF('Size', validators=[DataRequired()])
-    price = FF('Price', validators=[DataRequired()])
-
-
-class CreatePizzaForm(FlaskForm):
-    name = StringField('Name')
-    price = FloatField('Price')
-    ingredients = StringField('Ingredients')
-    size = FloatField('Size')
+class CreateTeamForm(FlaskForm):
+    name = StringField('Team name', validators=[DataRequired()])
+    members = StringField('Team members', validators=[DataRequired()])
+    lenght = FF('Lenght', validators=[DataRequired()])
+    height = FF('Height', validators=[DataRequired()])
+    width = FF('Width', validators=[DataRequired()])
 
 
 @app.route('/')
 def home():
-    pizzas = Pizzas.select()
-    return flask.render_template('home.html', pizzas=pizzas)
+    teams = Team.select()
+    return flask.render_template('home.html', teams=teams)
 
 
-@app.route('/get_pizza/<int:id>')
-def get_pizza(id):
-    pizza = Pizzas.get_by_id(id)
-    return flask.render_template('get_pizza.html',
-                                 pizza=pizza, pizza_id=id)
+@app.route('/get_team/<int:id>')
+def get_team(id):
+    team = Team.get_by_id(id)
+    return flask.render_template('get_team.html',
+                                 team=team, team_id=id)
 
 
-@app.route('/create_pizza', methods=['GET', 'POST'])
+@app.route('/create_team', methods=['GET', 'POST'])
 @auth.admin_required
-def create_pizza():
-    form = CreatePizzaForm()
+def create_team():
+    form = CreateTeamForm()
 
     if flask.request.method == 'POST':
-        name = flask.request.form.get('pizza_name')
-        price = float(flask.request.form.get('price'))
-        ingredients = flask.request.form.get('ingredients')
-        size = int(flask.request.form.get('size'))
+        name = flask.request.form.get('team name')
+        members = flask.request.form.get('team members')
+        lenght = float(flask.request.form.get('lenght'))
+        height = float(flask.request.form.get('height'))
+        width = float(flask.request.form.get('width'))
 
         if 'picture' in flask.request.files:
             file = flask.request.files['picture']
@@ -97,33 +93,29 @@ def create_pizza():
             filepath = os.path.abspath(app.root_path + '/static/' + filename)
             file.save(filepath)
 
-            new_pizza = Pizzas(name=name, price=price,
-                               ingredients=ingredients, size=size,
-                               picture=filename)
+            new_team = Team(name=name, members=members,lenght=lenght, height=height,width=width, picture=filename)
             
         else:
-            new_pizza = Pizzas(name=name, price=price,
-                               ingredients=ingredients, size=size)
+            new_team = Team(name=name, members=members,lenght=lenght, height=height,width=width)
             
-        new_pizza.save()
+        new_team.save()
         flask.redirect(flask.url_for('home'))
             
 
-    return flask.render_template('create_pizza.html',
-                                 form=form)
+    return flask.render_template('create_team.html', form=form)
 
 
-@app.route('/buy_pizza', methods=['POST'])
+@app.route('/buy_team', methods=['POST'])
 @auth.login_required
-def buy_pizza():
-    pizza_id = flask.request.form.get('pizza_id')
+def buy_team():
+    team_id = flask.request.form.get('team_id')
 
     if 'cart' in flask.session:
         cart = flask.session['cart']
-        cart.append(int(pizza_id))
+        cart.append(int(team_id))
         flask.session['cart'] = cart
     else:
-        flask.session['cart'] = [int(pizza_id)]
+        flask.session['cart'] = [int(team_id)]
 
     return flask.redirect(flask.url_for('my_cart'))
 
@@ -136,8 +128,8 @@ def my_cart():
     else:
         cart = []
 
-    cart_pizzas = [Pizzas.get_by_id(i) for i in cart]
-    return flask.render_template('my_cart.html', pizzas=cart_pizzas)
+    cart_teams = [Team.get_by_id(i) for i in cart]
+    return flask.render_template('my_cart.html', teams=cart_teams)
 
 
 @app.route('/create_admin')
@@ -172,5 +164,5 @@ def register():
 
 if __name__ == '__main__':
     auth.User.create_table(fail_silently=True)
-    Pizzas.create_table(fail_silently=True)
+    Team.create_table(fail_silently=True)
     app.run(debug=True)
