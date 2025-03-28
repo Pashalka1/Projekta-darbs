@@ -1,15 +1,53 @@
 .site-header .navbar-nav .nav-link {
-    color: #f93f61;
+    color: #3fb5f9;
+    position: fixed;
+    top: 10px;
+    right: 30px;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.user-info {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    background-color: #f0f0f0;
+    padding: 10px;
+    border-radius: 5px;
 }
 
 .bg-steel {
-    background-color: #f93f61;
+    background-color: #3fb5f9;
 }
 
 body {
-    background: #fafafa;
+    background: white;
     color: #333333;
     margin-top: 5rem;
+}
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+}
+.image-container {
+    width: 48%;
+    padding: 10px;
+}
+.text-container {
+    width: 48%;
+    padding: 10px;
+}
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+@media (max-width: 600px) {
+    .image-container, .text-container {
+        width: 100%;
+    }
 }
 
 .content-section {
@@ -55,3 +93,23 @@ a.article-title:hover {
     height: 25px;
     vertical-align: middle;
 }
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #ddd;
+  }
+  
+  th, td {
+    text-align: left;
+    padding: 8px;
+    border: 1px solid #ddd
+  }
+  
+  
+  th {
+    background-color: #3fb5f9;
+    color: white;
+    border: 1px solid #ddd
+  }
+
