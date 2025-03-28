@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+
+    <title>E-es</title>
+</head>
+<body>
+    <header class="site-header">
+        <nav class="navbar  navbar-expand-md navbar-dark bg-steel fixed-top">
+            <div class="container">
+                <a class="navbar-brand mr-4" href="/"><img style="height: 50px" src="https://scontent.frix1-1.fna.fbcdn.net/v/t39.30808-6/324181510_838972954033248_4485808413747017720_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=cXdSofXuuqEQ7kNvgFdCBUJ&_nc_zt=23&_nc_ht=scontent.frix1-1.fna&_nc_gid=GMrGhR10rKnlu_x2P1rrig&oh=00_AYE8HA3noI6FGRE66KlgyUjBKCGVsSmB4J6Ozmm-CcrHqg&oe=67EBFD48"><img></a>
+                <button class="btn dropdown-toggle" style="background-color: #3fb5f9; border: 1px solid white;" type="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="navbar-brand mr-0"> Menu </span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarToggle">
+                    <div class="navbar-nav ml-auto">
+                    <div class="dropdown-menu" style=>
+                        <a class="dropdown-item" href="{{ url_for('my_analysis') }}">Mana analīze</a>
+                        <a class="dropdown-item" href="{{ url_for('upload') }}">Augšupielādēt failu</a>
+                        <a class="dropdown-item" onclick="window.location.href='/trash'">Grafiks ar nejaušām komandām</a>
+                    </div>
+                  </div>
+                </div>
+            </div>
+        </nav>
+        <main role="main" class="container">
+            <div class="row">
+                {% block content %}{% endblock %}
+            </div>
+        </main>
+    </header>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>

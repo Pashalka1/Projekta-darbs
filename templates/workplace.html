@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block content %}
+<a href="{{ url_for('my_analysis')}}"><button>Atgriezties pie komandu izvēles</button></a>
+<a href="{{ url_for('table') }}" style="position: relative; left: 15px"><button>Apskatīt tabulu</button></a>
+<span style="position: relative; top: 15px">    
+    <form method="POST">
+        <label for="chart_type">Grafika tips:</label>
+        <select name="chart_type" id="chart_type">
+            <option value="{{chart_type}}">{{chart_type}}</option>
+            <option value="Lineārs">Lineārs</option>
+            <option value="Stabiņu">Stabiņu</option>
+            <option value="Riņķa">Riņķa</option>
+            <option value="Histogramma">Histogramma</option>        
+        </select>
+
+        <label for="filter_column">Filtrēt pēc stabiņa:</label>
+        <select name="filter_column" id="filter_column">
+            <option value="{{ filter_column }}">{{ filter_column }}</option>
+            {% for column in df.columns %}
+                <option value="{{ column }}">{{ column }}</option>
+            {% endfor %}
+        </select>
+
+        <label for="filter_value">Filtra vērtība:</label>
+        <input type="text" value="{{ filter_value}}" name="filter_value" id="filter_value">
+
+        <label for="x_axis">X ass:</label>
+        <select name="x_axis" id="x_axis">
+            <option value="{{x_axis}}">{{ x_axis }}</option>
+            {% for column in df.columns %}
+                <option value="{{ column }}">{{ column }}</option>
+            {% endfor %}
+        </select>
+
+        <label for="y_axis">Y ass:</label>
+        <select name="y_axis" id="y_axis">
+            <option value="{{y_axis}}">{{ y_axis }}</option>
+            {% for column in df.columns %}
+                <option value="{{ column }}">{{ column }}</option>
+            {% endfor %}
+        </select>
+
+        <button type="submit">Atjaunināt grafiku</button>
+    </form>
+
+    <div id="graph"></div>
+    <script src="https://cdn.plot.ly/plotly-3.0.1.min.js"></script>
+    <script>
+        // Получаем JSON-данные графика
+        var graphData = {{ graphJSON | safe }};
+
+        // Создаем график с помощью Plotly
+        Plotly.newPlot('graph', graphData.data, graphData.layout);
+    </script>
+    <t>Ņēmiet vērā, ka katra automobīļa īpatnējā jauda ir 3W</t>
+</span>
+{% endblock %}

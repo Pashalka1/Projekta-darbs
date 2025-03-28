@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<br></br>
+<h2 style="position:static">Tabula:</h2>
+<a href="{{ url_for('my_analysis')}}" style="position: absolute; right: 120px; top: 85px"><button>Atgriezties pie komandu izvēles</button></a>
+<a href="{{ url_for('workplace') }}" style="position: absolute; right: 40px; top: 85px"><button>Analizēt</button></a>
+<table>
+    <thead>
+        {% for column in columns %}
+        <th>{{column}}</th>
+        {% endfor %}
+    </thead>
+    <tbody>
+        {% for team in analysis %}
+        <tr>
+            {% for column in columns %}
+            <td>{{ team[column] }}</td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

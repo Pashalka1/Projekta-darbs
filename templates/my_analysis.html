@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+
+<form method="post" action="/my_analysis">
+    <button type="submit" name="button" value="addAllTeams">Pievienot analīzei visas komandas</button>
+    <button type="submit" name="button" value="removeAllTeams">Dzēst no analīzes visas komandas</button>
+</form>
+<a href="{{ url_for('table') }}" style="position: absolute; right: 40px; top: 85px"><button>Apskatīt tabulu</button></a>
+<a href="{{ url_for('workplace') }}" style="position: absolute; right: 40px; top: 125px"><button>Analizēt</button></a>
+<br></br>
+<ul>
+    <h2>Šobrīd Jūsu analīzei ir pievienotas sekojošas komandas:</h2>
+    {% for team in analysis %}
+    <li>
+        <h3><a href="{{ url_for('get_team', id=team.id) }}">Team: {{ team.name }}</a></h3>
+        <p>Komandas numurs: {{ team.number }}</p>
+        <p>Grupa: {{ team.role }}</p>
+    </li>
+    {% endfor %}  
+</ul>
+<ul>
+    <h2>Varat izvēlēties no sekojošajām komandām:</h2>
+    {% for team in teams  %}
+    <li>
+        <h3><a href="{{ url_for('get_team', id=team.id) }}"> {{ team.name }}</a></h3>
+        <p>Komandas numurs: {{ team.number }}</p>
+        <p>Grupa: {{ team.role }}</p>
+    </li>
+    {% endfor %}  
+</ul>
+{% endblock %}

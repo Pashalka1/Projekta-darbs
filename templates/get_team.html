@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h3>Komanda: {{ team.name }}</h3>
+<br>Loma: {{ team.role }}</br>
+<br>Numurs: {{ team.number }}</br>
+<br>Mašīnas masa: {{ team.mass }}</br>
+
+<form method="POST" action="">
+    <input type="hidden" name="team_id" value="{{ team.id }}">
+    <button type="submit" name="button" value="addTeam">Pievienot analīzei</button>
+    <button type="submit" name="button" value="removeTeam">Dzēst no analīzes</button>
+    <button type="submit" name="button" value="deleteTeam" onclick="return confirm('Vai Jūs esiet pārliecināti, ka vēlaties izdzēst šo komandu no datu bāzes?')">Izdzēst no datubāzes</button>
+</form>
+
+{% endblock %}

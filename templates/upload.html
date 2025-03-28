@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<h1>Augšupielādējiet CSV failu</h1>
+<br></br>
+<form action="/upload" method="POST" enctype="multipart/form-data">
+    <input type="file" name="file" accept=".csv" required>
+    <br></br>
+    <button type="submit" name="button" value="add">Pievienot esošajiem datiem</button>
+    <button type="submit" name="button" value="renew">Atjaunināt esošos datus</button>    
+    <button type="submit" name="button" value="rewrite">Augšupielādēt</button>
+</form>
+
+{% endblock %}
